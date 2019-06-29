@@ -1,17 +1,22 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const cookieSession = require('cookie-session');
+const bcrypt = require("bcrypt");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const groupsRouter = require('./routes/groups');
+const expensesRouter = require('./routes/expenses');
 
-var app = express();
+const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+require("dotenv").config();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -21,6 +26,31 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/groups', groupsRouter);
+app.use('/expenses', expensesRouter);
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+
+require('./config/auth')(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(process.env.MONGODB_URI, (error) => {
+  if (error) {
+    console.log('Não consegui conectar');
+  } else {
+    console.log('CONECTAMOS');
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
