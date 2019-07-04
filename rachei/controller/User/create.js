@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
 const createUser = (request, response) => {
+  console.log(request.body);
   const userDoc = {
     username: request.body.username,
     name: request.body.name,
@@ -21,8 +22,9 @@ const createUser = (request, response) => {
   console.log(userDoc);
 
   UserModel.create(userDoc)
-  .then(jawbreaker => {
-    response.send(jawbreaker);
+  .then(data => {
+    const message = 'Usuário criado com sucesso';
+    response.send({data, message});
   })
   .catch(error => {
     response.send(error)

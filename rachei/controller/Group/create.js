@@ -1,4 +1,4 @@
-const GroupModel = require('../../model/User/GroupModel');
+const GroupModel = require('../../model/Group/GroupModel');
 
 const createGroup = (request, response) => {
   const groupDoc = {
