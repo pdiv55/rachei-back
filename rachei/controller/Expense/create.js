@@ -1,4 +1,4 @@
-const ExpenseModel = require('../../model/User/ExpenseModel');
+const ExpenseModel = require('../../model/Expense/ExpenseModel');
 
 const createExpense = (request, response) => {
   const expenseDoc = {
@@ -14,8 +14,8 @@ const createExpense = (request, response) => {
   console.log(expenseDoc);
 
   ExpenseModel.create(expenseDoc)
-  .then(jawbreaker => {
-    response.send(jawbreaker);
+  .then(data => {
+    response.send(data);
   })
   .catch(error => {
     response.send(error)

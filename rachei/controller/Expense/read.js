@@ -1,7 +1,7 @@
-const ExpenseModel = require('../../model/User/ExpenseModel');
+const ExpenseModel = require('../../model/Expense/ExpenseModel');
 
 const readAllExpensesGroup = (request, response) => {
-  ExpenseModel.find({ busca: 'todas as despesas do grupo' })
+  ExpenseModel.find({ group: request.params.id })
   .then(data => {
     response.send(data);
   })
@@ -11,7 +11,7 @@ const readAllExpensesGroup = (request, response) => {
 };
 
 const readAllExpensesUser = (request, response) => {
-  ExpenseModel.find({ busca: 'todas as despesas do usuário' })
+  ExpenseModel.find({ $or:[{ from: request.params.userId }, { to: request.params.userId }]})
   .then(data => {
     response.send(data);
   })
