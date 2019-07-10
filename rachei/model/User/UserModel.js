@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const UserModel = mongoose.model('User', new Schema({
   username: { type: String, unique: true },
+  password: String,
   name: String,
   surname: String,
   cpf: { type: String, unique: true },

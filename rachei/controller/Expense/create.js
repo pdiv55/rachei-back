@@ -11,8 +11,6 @@ const createExpense = (request, response) => {
     picture: request.body.picture,
   };
 
-  console.log(expenseDoc);
-
   ExpenseModel.create(expenseDoc)
   .then(data => {
     response.send(data);

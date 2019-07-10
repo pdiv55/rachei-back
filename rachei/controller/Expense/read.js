@@ -6,7 +6,7 @@ const readAllExpensesGroup = (request, response) => {
     response.send(data);
   })
   .catch(error => {
-    console.log(error);
+    response.log(error);
   });
 };
 
@@ -16,7 +16,7 @@ const readAllExpensesUser = (request, response) => {
     response.send(data);
   })
   .catch(error => {
-    console.log(error);
+    response.log(error);
   });
 };
 
