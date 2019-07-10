@@ -6,7 +6,7 @@ const readAllGroups = (request, response) => {
     response.send(data);
   })
   .catch(error => {
-    console.log(error);
+    response.log(error);
   });
 };
 
@@ -16,7 +16,7 @@ const readMyGroups = (request, response) => {
     response.send(data);
   })
   .catch(error => {
-    console.log(error);
+    response.log(error);
   });
 };
 
@@ -26,7 +26,7 @@ const readGroup = (request, response) => {
     response.send(data);
   })
   .catch(error => {
-    console.log(error);
+    response.log(error);
   });
 };
 

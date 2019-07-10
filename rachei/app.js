@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require("passport");
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -45,7 +47,7 @@ app.use(passport.session());
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(process.env.MONGODB_URI, (error) => {
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true}, (error) => {
   if (error) {
     console.log('Não consegui conectar');
   } else {

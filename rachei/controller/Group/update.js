@@ -1,7 +1,8 @@
 const GroupModel = require('../../model/Group/GroupModel');
 
 const updateGroup = (request, response) => {
-  GroupModel.findOneAndUpdate({ _id: request.params.id }, { update: 'mudanças do grupo' })
+  const group = request.body
+  GroupModel.findOneAndUpdate({ _id: request.params.id }, group)
   .then(data => {
     response.send(data);
   })
