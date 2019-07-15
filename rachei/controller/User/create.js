@@ -19,8 +19,6 @@ const createUser = (request, response) => {
 
   userDoc.password = hashPass;
 
-  console.log(userDoc);
-
   UserModel.create(userDoc)
   .then(data => {
     const message = 'Usuário criado com sucesso';

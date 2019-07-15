@@ -6,17 +6,17 @@ const readAllGroups = (request, response) => {
     response.send(data);
   })
   .catch(error => {
-    response.log(error);
+    console.log(error);
   });
 };
 
 const readMyGroups = (request, response) => {
-  GroupModel.find({ users: request.params.id })
+  GroupModel.find({ users: '5d27c30dce2b10ea61cb6740' })
   .then(data => {
     response.send(data);
   })
   .catch(error => {
-    response.log(error);
+    console.log(error);
   });
 };
 
@@ -26,7 +26,7 @@ const readGroup = (request, response) => {
     response.send(data);
   })
   .catch(error => {
-    response.log(error);
+    console.log(error);
   });
 };
 
