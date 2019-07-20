@@ -11,6 +11,8 @@ const UserModel = mongoose.model('User', new Schema({
   email: { type: String, unique: true },
   expenses: Array,
   groups: Array,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date
 }));
 
 module.exports = UserModel;

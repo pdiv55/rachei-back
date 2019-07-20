@@ -12,6 +12,7 @@ const ExpenseModel = mongoose.model('Expense', new Schema({
   picture: String,
   date: Date,
   category: String,
+  creationDate: { type: Date, default: Date.now }
 }));
 
 module.exports = ExpenseModel;

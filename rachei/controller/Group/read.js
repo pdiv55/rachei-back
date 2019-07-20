@@ -11,7 +11,7 @@ const readAllGroups = (request, response) => {
 };
 
 const readMyGroups = (request, response) => {
-  GroupModel.find({ users: '5d27c30dce2b10ea61cb6740' })
+  GroupModel.find({ users: request.params.id })
   .then(data => {
     response.send(data);
   })

@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("../config/auth");
+const passport = require('passport');
 const bcrypt = require('bcrypt');
-const ExpenseModel = require('../model/Expense/ExpenseModel');
-const GroupModel = require('../model/Group/GroupModel');
 const UserModel = require('../model/User/UserModel');
+const GroupModel = require('../model/Group/GroupModel');
+const ExpenseModel = require('../model/Expense/ExpenseModel');
 
 const bcryptSalt = 10;
 
@@ -40,25 +40,24 @@ router.post('/signup', signup);
 
 const login = (request, response, next) => {
   passport.authenticate("local", (err, user, info) => {
-    request.login(user, (err) => {
-      console.log(request.user._id);
-      console.log('logou');
-      // const expenses = ExpenseModel.find({ $or:[{ from: request.user._id }, { to: request.user._id }]}).exec();
-      // const groups = GroupModel.find({ users: request.user._id }).exec();
-      // Promise.all([expenses, groups])
-      // .then(data => {
-      //   console.log(JSON.stringify(data));
-      //   response.json({ data, message: 'Login foi feito com sucesso' });
-      // })
-      // .catch(error => {
-      //   console.log(error);
-      // })
-      if (err) {
-        response.status(500).json({ message: 'Deu ruim na session' });
-      }
-
-      response.status(200).json({ user, message: 'Logou, vai time' });
-    });
+    const id = user._id.toString();
+    const expenses = ExpenseModel.find({ $or:[{ from: id }, { to: id }]}).exec();
+    const groups = GroupModel.find({ users: id }).exec();
+    Promise.all([expenses, groups])
+    .then(data => {
+      request.login(user, (err) => {
+        if (err) {
+          response.status(500).json(err);
+          return;
+        }
+        console.log(data);
+        response.status(200).json({ user, data, message: 'Logou, vai time' });
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    })
+    
   })(request, response, next);
 };
 

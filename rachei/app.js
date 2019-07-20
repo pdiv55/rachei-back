@@ -54,12 +54,14 @@ const usersRouter = require("./routes/users");
 const groupsRouter = require("./routes/groups");
 const expensesRouter = require("./routes/expenses");
 const authRouter = require("./routes/auth");
+const forgotPasswordRouter = require('./routes/password');
 
 app.use("/", indexRouter);
 app.use('/auth', authRouter);
 app.use("/users", usersRouter);
 app.use("/groups", groupsRouter);
 app.use("/expenses", expensesRouter);
+app.use("/password", forgotPasswordRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
