@@ -21,6 +21,7 @@ const readMyGroups = (request, response) => {
 };
 
 const readGroup = (request, response) => {
+  console.log(request);
   GroupModel.findOne({ _id: request.params.id })
   .then(data => {
     response.send(data);

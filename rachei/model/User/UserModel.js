@@ -11,6 +11,7 @@ const UserModel = mongoose.model('User', new Schema({
   email: { type: String, unique: true },
   expenses: Array,
   groups: Array,
+  profilePicture: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date
 }));

@@ -53,7 +53,7 @@ const forgotPassword = (request, response, next) => {
 router.post('/forgot/:email', forgotPassword);
 
 const resetPassword = (request, response) => {
-  UserModel.find({ resetPasswordToken: request.params.token, resetPasswordExpires: { $gt: Date.now() }  })
+  UserModel.find({ resetPasswordToken: request.params.token, resetPasswordExpires: { $gt: Date.now() } })
   .then(user => {
     if (!user) {
       response.status(500).json({ message: 'Password reset token is invalid or has expired.' });
