@@ -1,4 +1,6 @@
 const GroupModel = require('../../model/Group/GroupModel');
+const UserModel = require('../../model/User/UserModel');
+const mongoose = require('mongoose');
 
 const createGroup = (request, response) => {
   const groupDoc = {
@@ -12,11 +14,20 @@ const createGroup = (request, response) => {
   console.log(groupDoc);
 
   GroupModel.create(groupDoc)
-  .then(jawbreaker => {
-    response.send(jawbreaker);
+  .then(group => {
+    UserModel.updateMany({}, { $push: { groups: group._id }})
+    .where('_id').in(groupDoc.users)
+    .exec()
+    .then(users => {
+      console.log(users);
+      response.status(200).json(group);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   })
   .catch(error => {
-    response.send(error)
+    response.status(500).send(error)
   });
 };
 

@@ -9,8 +9,8 @@ const UserModel = mongoose.model('User', new Schema({
   surname: String,
   cpf: { type: String, unique: true },
   email: { type: String, unique: true },
-  expenses: Array,
-  groups: Array,
+  expenses: [{ type: Schema.Types.ObjectId, ref: 'Expense' }],
+  groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }],
   profilePicture: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date

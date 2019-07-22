@@ -7,7 +7,7 @@ const { readAllGroups, readMyGroups, readGroup } = require('../controller/Group/
 /* GET users listing. */
 router.get('/', readAllGroups);
 
-router.get('/user/:id', readMyGroups);
+router.get('/user/', readMyGroups);
 
 router.get('/:id', readGroup);
 

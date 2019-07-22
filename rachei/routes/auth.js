@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const middleware = require('../config/middleware');
 const UserModel = require('../model/User/UserModel');
 const GroupModel = require('../model/Group/GroupModel');
 const ExpenseModel = require('../model/Expense/ExpenseModel');
@@ -39,8 +41,13 @@ const signup = (request, response) => {
 router.post('/signup', signup);
 
 const login = (request, response, next) => {
+  console.log(request);
   passport.authenticate("local", (err, user, info) => {
     const id = user._id.toString();
+    const token = jwt.sign({ userId: id },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: '365d' }
+    );
     const expenses = ExpenseModel.find({ $or:[{ from: id }, { to: id }]}).exec();
     const groups = GroupModel.find({ users: id }).exec();
     Promise.all([expenses, groups])
@@ -51,7 +58,7 @@ const login = (request, response, next) => {
           return;
         }
         console.log(data);
-        response.status(200).json({ user, data, message: 'Logou, vai time' });
+        response.status(200).json({ user, data, token, message: 'Logou, vai time' });
       });
     })
     .catch(error => {
@@ -64,8 +71,19 @@ const login = (request, response, next) => {
 router.post('/login', login);
 
 router.get('/login', (request, response, next) => {
-  console.log(request.user);
   response.send(request.user);
 })
+
+const refresh = (request, response, next) => {
+  UserModel.findById(request.decoded.userId)
+  .then(user => {
+    response.status(200).json(user);
+  })
+  .catch(err => {
+    response.status(400).json(err);
+  })
+}
+
+router.get('/refresh', middleware, refresh);
 
 module.exports = router;

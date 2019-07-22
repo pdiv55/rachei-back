@@ -12,6 +12,7 @@ router.post('/upload/user/:id', parser.single("image"), (request, response) => {
     user.profilePicture = url;
     user.save(err => {
       if (err) {
+        console.log(err);
         response.status(500).json(err);
         return;
       }
@@ -19,6 +20,7 @@ router.post('/upload/user/:id', parser.single("image"), (request, response) => {
     })
   })
   .catch(error => {
+    console.log(error);
     response.status(500).json(error);
   })
 });

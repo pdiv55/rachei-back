@@ -14,8 +14,9 @@ const readAllUsers = (request, response) => {
 };
 
 const readAllUsersGroup = (request, response) => {
-  console.log(request);
+  console.log(request.params.id);
   UserModel.find({ groups: request.params.id })
+  .populate('groups')
   .then(data => {
     response.send(data);
   })

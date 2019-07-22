@@ -5,9 +5,9 @@ const { Schema } = mongoose;
 const GroupModel = mongoose.model('Group', new Schema({
   name: String,
   description: String,
-  users: Array,
+  users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   currency: String,
-  expenses: Array,
+  expenses: [{ type: Schema.Types.ObjectId, ref: 'Expense' }],
   creationDate: {type: Date, default: Date.now},
 }));
 
