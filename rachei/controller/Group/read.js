@@ -12,6 +12,8 @@ const readAllGroups = (request, response) => {
 
 const readMyGroups = (request, response) => {
   GroupModel.find({ users: request.decoded.userId.toString() })
+  .populate('users')
+  .populate('expenses')
   .then(data => {
     response.send(data);
   })
