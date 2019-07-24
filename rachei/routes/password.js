@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const UserModel = require('../model/User/UserModel');
 
 const forgotPassword = (request, response, next) => {
@@ -11,15 +11,8 @@ const forgotPassword = (request, response, next) => {
       response.status(400).json({ message: 'Usuário não existe' });
     }
     const token = crypto.randomBytes(20).toString('hex');
-    const smtpTransport = nodemailer.createTransport({
-      host: 'smtp.sendgrid.net',
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.SENDGRID_USERNAME,
-        pass: process.env.SENDGRID_PASSWORD
-      }
-    });
+
+    sgMail.setApiKey(process.env.SENDGRID_PASSWORD);
 
     user.resetPasswordToken = token;
     user.resetPasswordExpires = Date.now() + 3600000;
@@ -34,29 +27,30 @@ const forgotPassword = (request, response, next) => {
     const mailOptions = {
       to: user.email,
       from: 'passwordreset@rachei.com.br',
-      subject: 'Node.js Password Reset',
+      subject: 'Reset de senha no Rachei!',
       html: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-        'http://' + request.headers.host + '/reset/' + token + '\n\n' +
+        request.headers.origin + '/new-password/' + token + '\n\n' +
         'If you did not request this, please ignore this email and your password will remain unchanged.\n'
     };
-    smtpTransport.sendMail(mailOptions, (err) => {
-      if (err) {
-        response.status(500).json(err);
-        return;
-      }
+
+    sgMail.send(mailOptions)
+    .then(() => {
       response.status(200).json({ message: 'An e-mail has been sent to ' + user.email + ' with further instructions.' });
-    });
+    }) 
+    .catch(error => {
+      console.log(error.toString());
+    })
   })
 }
 
 router.post('/forgot/:email', forgotPassword);
 
 const resetPassword = (request, response) => {
-  UserModel.find({ resetPasswordToken: request.params.token, resetPasswordExpires: { $gt: Date.now() } })
+  UserModel.findOne({ resetPasswordToken: request.params.token, resetPasswordExpires: { $gt: Date.now() } })
   .then(user => {
     if (!user) {
-      response.status(500).json({ message: 'Password reset token is invalid or has expired.' });
+      response.status(500).json({ message: 'Token de reset de senha inválido ou expirado!' });
     }
     response.status(200).json(user);
   })

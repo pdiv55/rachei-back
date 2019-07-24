@@ -41,7 +41,6 @@ const signup = (request, response) => {
 router.post('/signup', signup);
 
 const login = (request, response, next) => {
-  console.log(request);
   passport.authenticate("local", (err, user, info) => {
     const id = user._id.toString();
     const token = jwt.sign({ userId: id },
@@ -85,5 +84,18 @@ const refresh = (request, response, next) => {
 }
 
 router.get('/refresh', middleware, refresh);
+
+const logout = (req, res, next) => {
+  req.logout();
+  console.log('entrou');
+  req.session.destroy((err) => {
+    console.log('entrou destroy');
+    if(!err) {
+      res.status(200).json('Usuário deslogado com sucesso');
+    }
+  })
+}
+
+router.get('/logout', middleware, logout);
 
 module.exports = router;

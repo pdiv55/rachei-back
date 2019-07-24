@@ -40,6 +40,7 @@ app.use(session({
  saveUninitialized: true,
  cookie: { maxAge: 600000 },
  rolling: true,
+ unset: 'destroy',
  store: new MongoStore({
   mongooseConnection: mongoose.connection,
   ttl: 24 * 60 * 60
@@ -62,7 +63,7 @@ app.use('/auth', authRouter);
 app.use("/users", middleware, usersRouter);
 app.use("/groups", middleware, groupsRouter);
 app.use("/expenses", middleware, expensesRouter);
-app.use("/password", middleware, forgotPasswordRouter);
+app.use("/password", forgotPasswordRouter);
 app.use('/files', filesRouter);
 
 // catch 404 and forward to error handler
