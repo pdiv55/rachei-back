@@ -1,22 +1,34 @@
 const ExpenseModel = require('../../model/Expense/ExpenseModel');
+const IndividualExpenseModel = require('../../model/IndividualExpense/IndividualExpenseModel');
 
 const readAllExpensesGroup = (request, response) => {
   ExpenseModel.find({ group: request.params.id })
+  .populate({
+    path: 'individualExpenses',
+    populate: {
+      path: 'from'
+    },
+    populate: {
+      path: 'to'
+    }
+  })
   .then(data => {
-    response.send(data);
+    response.status(200).json(data);
   })
   .catch(error => {
-    response.log(error);
+    console.log(error);
   });
 };
 
 const readAllExpensesUser = (request, response) => {
-  ExpenseModel.find({ $or:[{ from: request.params.userId }, { to: request.params.userId }]})
+  const from = IndividualExpenseModel.find({ from: request.decoded.userId }).populate('expense').exec();
+  const to = IndividualExpenseModel.find({ to: request.decoded.userId }).populate('expense').exec();
+  Promise.all([from, to])
   .then(data => {
-    response.send(data);
+    response.status(200).json(data);
   })
   .catch(error => {
-    response.log(error);
+    console.log(error);
   });
 };
 

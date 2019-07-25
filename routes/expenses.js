@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/group/:id', readAllExpensesGroup);
 
-router.get('/user/:id', readAllExpensesUser);
+router.get('/user/', readAllExpensesUser);
 
 router.get('/:id', readExpense);
 
