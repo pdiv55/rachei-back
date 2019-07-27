@@ -4,7 +4,8 @@
   **To discover the platform just follow** <a href="www.rachei.herokuapp.com"><strong>this link</strong></a>
 
 
-<span style="color: red"> <strong>Attention : this is the repo for the back part of the app, please make sure you also visit the repo with the Frontend code <a href="https://github.com/pdiv55/rachei-front">here</a></strong></span>
+**<u>Attention</u> : this is the repo for the back part of the app, please make sure you also visit the repo with the front-end code <a href="https://github.com/pdiv55/rachei-front">here</a>**
+
 
 ## Contribute
 Rachei is the product of a lot of teamwork from a group of junior coders, all pull requests are welcome !
@@ -23,7 +24,7 @@ Thanks!
 
 
 ## Setup
-Rachei's back engine is built with NodeJS, Mongoose and ExpressJS.
+Rachei's <u>back</u> engine is built with NodeJS, Mongoose and ExpressJS.
 The website was deployed with Heroku.
 
 The following dependencies must be installed :
