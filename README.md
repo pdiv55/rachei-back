@@ -28,15 +28,15 @@ Rachei's <u>back</u> engine is built with NodeJS, Mongoose and ExpressJS.
 The website was deployed with Heroku.
 
 The following dependencies must be installed :
-- fortawesome/fontawesome-svg-core (v. 1.2.19),
-- fortawesome/free-solid-svg-icons (v. 5.9.0),
-- fortawesome/react-fontawesome"(v. 0.1.4),
-- axios (v. 0.19.0),
-- bulma (v. 0.7.5), 
-- dotenv (v. 8.0.0),
-- react (v. 16.8.6), 
-- react-dom (v. 16.8.6),
-- react-router-dom (v. 5.0.1),
+- fortawesome/fontawesome-svg-core (v. 1.2.19),<br>
+- fortawesome/free-solid-svg-icons (v. 5.9.0), <br>
+- fortawesome/react-fontawesome"(v. 0.1.4), <br>
+- axios (v. 0.19.0), <br>
+- bulma (v. 0.7.5),  <br>
+- dotenv (v. 8.0.0), <br>
+- react (v. 16.8.6),  <br>
+- react-dom (v. 16.8.6), <br>
+- react-router-dom (v. 5.0.1), <br>
 - react-scripts (v. 3.0.1)
 
 
