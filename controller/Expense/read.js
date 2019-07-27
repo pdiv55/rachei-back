@@ -4,15 +4,18 @@ const IndividualExpenseModel = require('../../model/IndividualExpense/Individual
 const readAllExpensesGroup = (request, response) => {
   ExpenseModel.find({ group: request.params.id })
   .populate({
-    path: 'individualExpenses',
-    populate: {
-      path: 'from'
-    },
-    populate: {
-      path: 'to'
-    }
+  path: 'individualExpenses',
+  populate: [{
+    path: 'from'
+  },
+  {
+    path: 'to'
+  }]
   })
+  .populate('from')
+  .populate('to')
   .then(data => {
+    console.log(data);
     response.status(200).json(data);
   })
   .catch(error => {
