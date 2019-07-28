@@ -28,32 +28,60 @@ Rachei's _back_ engine is built with NodeJS, Mongoose and ExpressJS.
 The website was deployed with Heroku.
 
 The following dependencies must be installed :
-- fortawesome/fontawesome-svg-core (v. 1.2.19),
-- fortawesome/free-solid-svg-icons (v. 5.9.0), 
-- fortawesome/react-fontawesome"(v. 0.1.4), 
-- axios (v. 0.19.0), 
-- bulma (v. 0.7.5),  
-- dotenv (v. 8.0.0), 
-- react (v. 16.8.6),  
-- react-dom (v. 16.8.6), 
-- react-router-dom (v. 5.0.1), 
-- react-scripts (v. 3.0.1)
+- bcrypt (v. 3.0.6),
+- body-parser (v. 1.19.0),
+- connect-mongo (v. 3.0.0),
+- cookie-parser (v. 1.4.4),
+- cookie-session (v. 1.3.3),
+- cors (v. 2.8.5),
+- debug (v. 2.6.9),
+- dotenv (v. 8.0.0),
+- express (v. 4.16.1),
+- express-session (v. 1.16.2),
+- http-errors (v. 1.6.3),
+- mongoose (v. 5.6.2),
+- morgan (v. 1.9.1),
+- passport (v. 0.4.0),
+- passport-local (v. 1.0.0)
 
 
 ## Route-Tree
 
-"/"  ---> HOME <br>
-"/user-form"  ---> USER FORM (for signup or user info edition) <br>
-"/signin"  ---> SIGNIN <br>
-"/forgot-password"  ---> FORGOT PASSWORD (to have a password recovery email sent to you) <br>
-"/new-password/:token"  --> NEW PASSWORD (to update your password) <br>
-"/my-rachadas"  ---> MY RACHADAS (dashboard with all groups where the user is a member) <br>
-"/rachada-form/:id"  ---> RACHADA FORM (to create or edit groups) <br>
-"/rachada/:id"  ---> RACHADA VIEW (dashboard with all the group's expenses and balance insights) <br>
-"/despesa-form/:id"  --> DESPESA FORM (to create or edit expenses) <br>
-"/my-carteira"  ---> CARTEIRA (dashboard to manage personal wallet) <br>
-"/deposit"  ---> DEPOSIT (to desposit money on your personal wallet) <br>
-"/logout"  ---> LOGOUT
+_Auth ("/auth/....")_ <br>
+"/signup"  ---> to create a new user <br>
+"/login"  ---> for passport user authentication <br>
+"/refresh"  ---> to keep the user loggedin <br>
+"/logout" <br>
+
+_Users ("/users/....")_ <br>
+"/" ---> read all users <br>
+"/group/:id" ---> read all users from a group <br>
+"/:id" ---> read a specific user with its id <br>
+"/update/:id" ---> update an user with its id <br>
+
+_Expenses ("/expenses/....")_  <br>
+"/create" ---> create an expense <br>
+"/group/:id" ---> read all expenses of a group with its id <br>
+"/user/" ---> read all expenses of the loggedin user <br>
+"/:id" --->  read a specific expense with its id <br>
+"/update/:id" ---> update an expense with its id <br>
+"/delete/:id" ---> delete an expense with its id <br>
+
+_Groups ("/groups/....")_ <br>
+"/create" ---> create a group <br>
+"/user/" ---> read all groups of the loggedin user <br>
+"/:id" --->  read a specific group with its id <br>
+"/update/:id" ---> update a group with its id <br>
+"/delete/:id" ---> delete a group with its id <br>
+
+_Files ("/files/....")_ <br>
+"/upload/user/:id" ---> upload and attach file to a user with its id <br>
+"/upload/expense/:id" ---> upload and attach file to an expense with its id <br>
+
+_Passwords_ <br>
+"/forgot/:email" ---> to send a recovery email for a lost password <br>
+"/reset/:token" ---> to reset password <br>
+
 
 ## Authors
 Marcelo Oliveira - @marbmo <br>
