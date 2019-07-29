@@ -11,7 +11,6 @@ const ExpenseModel = require('../model/Expense/ExpenseModel');
 const bcryptSalt = 10;
 
 const signup = (request, response) => {
-  console.log(request.body);
   const userDoc = {
     username: request.body.username,
     name: request.body.name,
