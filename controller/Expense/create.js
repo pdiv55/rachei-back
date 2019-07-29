@@ -9,7 +9,8 @@ const createExpense = (request, response) => {
     date: request.body.expense.date,
     group: request.body.expense.group.id,
     from: request.body.expense.from,
-    to: request.body.expense.to
+    to: request.body.expense.to,
+    value: request.body.expense.value,
   };
 
   ExpenseModel.create(expenseDoc)
