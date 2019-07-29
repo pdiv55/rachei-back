@@ -4,15 +4,18 @@ const IndividualExpenseModel = require('../../model/IndividualExpense/Individual
 const readAllExpensesGroup = (request, response) => {
   ExpenseModel.find({ group: request.params.id })
   .populate({
-    path: 'individualExpenses',
-    populate: {
-      path: 'from'
-    },
-    populate: {
-      path: 'to'
-    }
+  path: 'individualExpenses',
+  populate: [{
+    path: 'from'
+  },
+  {
+    path: 'to'
+  }]
   })
+  .populate('from')
+  .populate('to')
   .then(data => {
+    console.log(data);
     response.status(200).json(data);
   })
   .catch(error => {
@@ -21,8 +24,8 @@ const readAllExpensesGroup = (request, response) => {
 };
 
 const readAllExpensesUser = (request, response) => {
-  const from = IndividualExpenseModel.find({ from: request.decoded.userId }).populate('expense').exec();
-  const to = IndividualExpenseModel.find({ to: request.decoded.userId }).populate('expense').exec();
+  const from = IndividualExpenseModel.find({ from: request.decoded.userId }).populate('expense').populate('from').populate('to').exec();
+  const to = IndividualExpenseModel.find({ to: request.decoded.userId }).populate('expense').populate('from').populate('to').exec();
   Promise.all([from, to])
   .then(data => {
     response.status(200).json(data);

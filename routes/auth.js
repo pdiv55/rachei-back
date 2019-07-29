@@ -28,13 +28,13 @@ const signup = (request, response) => {
 
   UserModel.create(userDoc)
   .then(data => {
-    console.log('entrou');
+    console.log('entrou criação');
     const message = 'Usuário criado com sucesso';
-    response.json({data, message});
+    response.status(200).json({data, message});
   })
   .catch(error => {
     console.log('entrou erro');
-    response.json(error)
+    response.status(500).json(error)
   });
 };
 

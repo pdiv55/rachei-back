@@ -8,17 +8,17 @@ const createExpense = (request, response) => {
     name: request.body.expense.name,
     date: request.body.expense.date,
     group: request.body.expense.group.id,
-    users: request.body.expense.users
+    from: request.body.expense.from,
+    to: request.body.expense.to,
+    value: request.body.expense.value,
   };
 
   ExpenseModel.create(expenseDoc)
   .then(expense => {
-    console.log('entrou');
     const group = GroupModel.findById(expense.group).exec();
     const users = UserModel.find({ _id: { $in: request.body.expense.users } }).exec();
     Promise.all([group, users])
     .then(data => {
-      console.log('entrou');
       data[0].expenses.push(expense._id);
       data[0].save();
 
@@ -29,17 +29,25 @@ const createExpense = (request, response) => {
 
       const individualExpenses = [...request.body.individualExpenses];
       individualExpenses.forEach(element => {
-        console.log(element);
         const IndividualExpenseObj = {
           value: element.value,
           from: element.from,
           to: element.to,
           expense: expense._id,
         }
-        console.log(IndividualExpenseObj);
-        IndividualExpenseModel.create(IndividualExpenseObj);
+        IndividualExpenseModel.create(IndividualExpenseObj)
+        .then(individualExpense => {
+          ExpenseModel.update({ _id: expense._id }, { $push: { individualExpenses: individualExpense._id }})
+          .then(() => {
+            console.log(`atualizou a expense: ${expense._id}`)
+          })
+          .catch(error => {
+            console.log(error);
+          })
+        });
       });
-      response.status(200).json(expense);
+
+      response.status(200).json({ expense, message: 'Despesa criada com sucesso!' });
     })
     .catch(error => {
       console.log(error);

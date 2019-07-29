@@ -3,15 +3,21 @@ const UserModel = require('../../model/User/UserModel');
 const mongoose = require('mongoose');
 
 const createGroup = (request, response) => {
+  const date = new Date();
+  const day = date.getDate();
+  const month = parseInt(date.getMonth())+1;
+  const year = date.getFullYear();
+
+  const creationDate = `${day}/${month}/${year}`;
+
   const groupDoc = {
     name: request.body.name,
     description: request.body.description,
     users: request.body.users,
     currency: request.body.currency,
     expenses: request.body.expenses,
+    creationDate: creationDate
   };
-
-  console.log(groupDoc);
 
   GroupModel.create(groupDoc)
   .then(group => {

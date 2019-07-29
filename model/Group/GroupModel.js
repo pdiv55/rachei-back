@@ -8,7 +8,7 @@ const GroupModel = mongoose.model('Group', new Schema({
   users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   currency: String,
   expenses: [{ type: Schema.Types.ObjectId, ref: 'Expense' }],
-  creationDate: {type: Date, default: Date.now},
+  creationDate: String,
 }));
 
 module.exports = GroupModel;
