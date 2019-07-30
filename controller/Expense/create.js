@@ -7,7 +7,7 @@ const createExpense = (request, response) => {
   const expenseDoc = {
     name: request.body.expense.name,
     date: request.body.expense.date,
-    group: request.body.expense.group.id,
+    group: request.body.expense.group,
     from: request.body.expense.from,
     to: request.body.expense.to,
     value: request.body.expense.value,

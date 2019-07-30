@@ -18,7 +18,7 @@ router.get('/:id', readExpense);
 
 router.post('/create/:id', createExpense);
 
-router.put('/update/:id', updateExpense);
+router.post('/update/:id', updateExpense);
 
 router.delete('/delete/:id', deleteExpense);
 

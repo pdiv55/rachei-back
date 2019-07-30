@@ -1,13 +1,19 @@
 const ExpenseModel = require("../../model/Expense/ExpenseModel");
+const IndividualExpenseModel = require("../../model/IndividualExpense/IndividualExpenseModel");
 
 const deleteExpense = (request, response) => {
   ExpenseModel.deleteOne({ _id: request.params.id })
-    .then(data => {
-      response.send(data);
+  .then(data => {
+    IndividualExpenseModel.deleteMany({ expense: request.params.id })
+    .then(response => {
+      console.log(response);
+      console.log('deletado');
     })
-    .catch(error => {
-      response.send(error);
-    });
+    response.status(200).json(data);
+  })
+  .catch(error => {
+    response.send(error);
+  });
 };
 
 module.exports = deleteExpense;
