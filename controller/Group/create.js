@@ -15,7 +15,6 @@ const createGroup = (request, response) => {
     description: request.body.description,
     users: request.body.users,
     currency: request.body.currency,
-    expenses: request.body.expenses,
     creationDate: creationDate
   };
 
